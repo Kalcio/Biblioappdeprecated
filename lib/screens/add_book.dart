@@ -13,12 +13,13 @@ class _AddBookState extends State<AddBook> {
   final _bookEditorialController = TextEditingController();
   final _bookYearController = TextEditingController();
   final _bookISBNController = TextEditingController();
+  bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add New Book"),
+        title: const Text("New Book"),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -28,7 +29,7 @@ class _AddBookState extends State<AddBook> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Add New Info',
+                  'Add New Book',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
 
