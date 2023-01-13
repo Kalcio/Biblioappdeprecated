@@ -13,7 +13,11 @@ class _AddBookState extends State<AddBook> {
   final _bookEditorialController = TextEditingController();
   final _bookYearController = TextEditingController();
   final _bookISBNController = TextEditingController();
-  bool _validate = false;
+  bool _validateName = false;
+  bool _validateAutor = false;
+  bool _validateEditorial = false;
+  bool _validateYear = false;
+  bool _validateISBN = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +43,11 @@ class _AddBookState extends State<AddBook> {
                 ),
                 TextField(
                   controller: _bookNameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: "Enter Name",
                     labelText: 'Name',
+                    errorText: _validateName ? 'Value Ca\'t Be Empty' : null,
                   ),
                 ),
 
@@ -52,10 +57,11 @@ class _AddBookState extends State<AddBook> {
                 ),
                 TextField(
                   controller: _bookAutorController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: "Enter Autor",
                     labelText: 'Autor',
+                    errorText: _validateAutor ? 'Value Ca\'t Be Empty' : null,
                   ),
                 ),
 
@@ -65,10 +71,12 @@ class _AddBookState extends State<AddBook> {
                 ),
                 TextField(
                   controller: _bookEditorialController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: "Enter Editorial",
                     labelText: 'Editorial',
+                    errorText:
+                        _validateEditorial ? 'Value Ca\'t Be Empty' : null,
                   ),
                 ),
 
@@ -78,10 +86,11 @@ class _AddBookState extends State<AddBook> {
                 ),
                 TextField(
                   controller: _bookYearController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: "Enter Year",
                     labelText: 'Year',
+                    errorText: _validateYear ? 'Value Ca\'t Be Empty' : null,
                   ),
                 ),
 
@@ -91,10 +100,11 @@ class _AddBookState extends State<AddBook> {
                 ),
                 TextField(
                   controller: _bookISBNController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: "Enter ISBN",
                     labelText: 'ISBN',
+                    errorText: _validateISBN ? 'Value Ca\'t Be Empty' : null,
                   ),
                 ),
 
@@ -109,7 +119,32 @@ class _AddBookState extends State<AddBook> {
                           backgroundColor: Colors.blue,
                           textStyle: const TextStyle(fontSize: 15),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _bookNameController.text.isEmpty
+                                ? _validateName = true
+                                : _validateName = false;
+                            _bookAutorController.text.isEmpty
+                                ? _validateAutor = true
+                                : _validateAutor = false;
+                            _bookEditorialController.text.isEmpty
+                                ? _validateEditorial = true
+                                : _validateEditorial = false;
+                            _bookYearController.text.isEmpty
+                                ? _validateYear = true
+                                : _validateYear = false;
+                            _bookISBNController.text.isEmpty
+                                ? _validateISBN = true
+                                : _validateISBN = false;
+                            if (_validateName == false &&
+                                _validateAutor == false &&
+                                _validateEditorial == false &&
+                                _validateYear == false &&
+                                _validateISBN == false) {
+                              //print("Data can save");
+                            }
+                          });
+                        },
                         child: const Text('Save Details')),
                     const SizedBox(
                       width: 10.0,
