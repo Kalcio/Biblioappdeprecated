@@ -1,4 +1,4 @@
-import 'package:biblioapp/screens/add_book.dart';
+import 'package:biblioapp/pages/add_book.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -30,20 +30,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("BiblioApp CRUD"),
-      ),
-      body: const Center(
-        child: Text("Administrador de libros"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddBook()));
-        },
-        child: const Icon(Icons.add),
-      ),
+    return const MaterialApp(
+      title: 'BOOKS',
+      debugShowCheckedModeBanner: false,
+      home: AddBook(),
     );
   }
 }
