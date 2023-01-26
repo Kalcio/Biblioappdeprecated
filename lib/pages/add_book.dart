@@ -36,6 +36,23 @@ class _AddBookState extends State<AddBook> {
         key: globalKey,
         child: _formUI(),
       ),
+      bottomNavigationBar: SizedBox(
+        height: 110,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FormHelper.submitButton("Save", () {},
+                borderRadius: 10,
+                btnColor: Colors.green,
+                borderColor: Colors.green),
+            FormHelper.submitButton("Cancel", () {},
+                borderRadius: 10,
+                btnColor: Colors.red,
+                borderColor: Colors.red),
+          ],
+        ),
+      ),
     );
   }
 
@@ -211,10 +228,10 @@ class _AddBookState extends State<AddBook> {
                 height: 300,
               )
             : SizedBox(
-                width: 300,
-                height: 250,
+                width: 180,
+                height: 220,
                 child: FittedBox(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.scaleDown,
                   child: Image.network(
                       "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/255px-No-Image-Placeholder.svg.png"),
                 ),
