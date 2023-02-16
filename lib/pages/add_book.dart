@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:biblioapp/models/books_model.dart';
+import 'package:biblioapp/services/db_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -18,10 +19,17 @@ class _AddBookState extends State<AddBook> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   late BookModel model;
 
+  late DBService dbService;
+
   @override
   void initState() {
     super.initState();
+    dbService = DBService();
     model = BookModel(name: "", autor: "");
+
+    if (widget.isEditMode) {
+      model = widget.model!;
+    }
   }
 
   @override
@@ -42,7 +50,39 @@ class _AddBookState extends State<AddBook> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            FormHelper.submitButton("Save", () {},
+            FormHelper.submitButton("Save", () {
+              if (validateAndSave()) {
+                if (widget.isEditMode) {
+                  dbService.updateBook(model).then(
+                    (value) {
+                      FormHelper.showSimpleAlertDialog(
+                        context,
+                        "SQFLITE",
+                        "Data Modifed Successfully",
+                        "Ok",
+                        () {
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  );
+                } else {
+                  dbService.addBook(model).then(
+                    (value) {
+                      FormHelper.showSimpleAlertDialog(
+                        context,
+                        "SQFLITE",
+                        "Data Added Successfully",
+                        "Ok",
+                        () {
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  );
+                }
+              }
+            },
                 borderRadius: 10,
                 btnColor: Colors.green,
                 borderColor: Colors.green),
@@ -181,7 +221,7 @@ class _AddBookState extends State<AddBook> {
                       }
                     },
                     (onSaved) {
-                      model.year = int.parse(onSaved.trim());
+                      model.isbn = int.parse(onSaved.trim());
                     },
                     initialValue: "",
                     showPrefixIcon: true,
@@ -197,6 +237,9 @@ class _AddBookState extends State<AddBook> {
                   ),
                 )
               ],
+            ),
+            const SizedBox(
+              height: 10,
             ),
             _picPicker(
               model.image ?? "",
@@ -228,12 +271,11 @@ class _AddBookState extends State<AddBook> {
                 height: 300,
               )
             : SizedBox(
-                width: 180,
-                height: 220,
-                child: FittedBox(
+                child: Image.network(
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/255px-No-Image-Placeholder.svg.png",
+                  width: 350,
+                  height: 250,
                   fit: BoxFit.scaleDown,
-                  child: Image.network(
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/255px-No-Image-Placeholder.svg.png"),
                 ),
               ),
         Row(
@@ -277,5 +319,14 @@ class _AddBookState extends State<AddBook> {
         )
       ],
     );
+  }
+
+  bool validateAndSave() {
+    final form = globalKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }
