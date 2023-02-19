@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
-class AddBook extends StatefulWidget {
-  const AddBook({super.key, this.model, this.isEditMode = false});
+class AddEditBookPage extends StatefulWidget {
+  const AddEditBookPage({super.key, this.model, this.isEditMode = false});
 
   final BookModel? model;
   final bool isEditMode;
 
   @override
-  State<AddBook> createState() => _AddBookState();
+  State<AddEditBookPage> createState() => _AddEditBookPage();
 }
 
-class _AddBookState extends State<AddBook> {
+class _AddEditBookPage extends State<AddEditBookPage> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   late BookModel model;
 
