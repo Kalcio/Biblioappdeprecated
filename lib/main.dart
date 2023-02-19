@@ -1,4 +1,4 @@
-import 'package:biblioapp/pages/add_book.dart';
+import 'package:biblioapp/pages/add_edit_book.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return const MaterialApp(
       title: 'BOOKS',
       debugShowCheckedModeBanner: false,
-      home: AddBook(),
+      home: AddEditBookPage(),
     );
   }
 }
